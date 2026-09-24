@@ -5,7 +5,9 @@ The purpose of this repository is to house the weekly labs and discussion for ED
 
 ### Folder Organization 
 
+---
 └── EDS223
     ├── README.md 
     ├── weekly_discussion
     └── weekly_labs
+---
