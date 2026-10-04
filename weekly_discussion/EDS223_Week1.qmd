@@ -1,0 +1,137 @@
+---
+title: "Week 1: Discussion Section"
+subtitle: "Making maps with tmap and beyond"
+author: "Monique Hernandez"
+date: 2026-10-2
+execute: 
+  eval: true
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+## Load in data
+```{r}
+library(here)
+library(tidyverse)
+library(sf)
+library(stars)
+library(tmap)
+```
+
+```{r}
+ei_points <- st_read(here("weekly_discussion", "data", "ei_points.gpkg")) |> 
+  filter(type == "volcano")
+ei_elev <- read_stars(here("weekly_discussion", "data", "ei_elev.tif"))
+ei_borders <- st_read(here("weekly_discussion", "data", "ei_border.gpkg"))
+ei_roads <- st_read(here("weekly_discussion", "data", "ei_roads.gpkg"))
+
+```
+
+## Create a single-object map with tmap
+
+```{r}
+tm_shape(ei_roads) +
+    tm_lines() +
+    tm_compass()
+
+```
+
+```{r}
+
+
+tm_shape(ei_points) +
+    tm_polygons() +
+    tm_scalebar()
+
+```
+
+```{r}
+# Ei
+tm_shape(ei_borders) +
+  tm_borders() +
+  tm_layout(main.title = "Easter Island")
+
+```
+
+## Create multiple-object map with tmap
+
+
+```{r}
+
+ei_map <- tm_shape(ei_elev) +
+  tm_graticules() +
+  tm_raster(col.scale = tm_scale_continuous(values = "-rd_yl_gn"),
+            col.legend = tm_legend("Elevation (m asl)")) +
+  tm_shape(ei_borders) + 
+    tm_borders() +
+  tm_shape(ei_roads) +
+    tm_lines() +
+  tm_shape(ei_points) +
+    tm_symbols(shape = 24, 
+               size = "elevation", 
+               size.legend = tm_legend("Volcanoes (m asl)")) +
+  tm_compass(position = c("right", "top")) +
+  tm_scalebar() +
+  tm_title("Easter Island")
+
+ei_map
+
+
+```
+
+## Create an interactive map with tmap
+
+```{r}
+tmap_mode("view") +
+
+ei_map
+
+```
+
+
+
+## Create a multiple-object map with gplot2
+
+```{r}
+
+
+ggplot(data = ) +
+    geom_
+
+```
+
+```{r}
+
+
+volcsno_points <- ei_points |>
+    
+
+
+ggplot(data = world) +
+  geom_sf() +
+  geom_sf(data = pb_spatial, 
+          aes(fill = year),  # point color based on 'year'
+          color = "black",  # point edges black
+          shape = 21,
+          size = 2, 
+          alpha = 0.7) +  # transparency
+  labs(title = "Polar Bear Observations",
+       x = "Longitude",
+       y = "Latitude",
+       fill = "Year") +
+  # limit map to polar bear habitat latitudes
+  coord_sf(xlim = c(-180, 180), ylim = c(45, 90), expand = FALSE) +
+  theme_minimal() + 
+  theme(legend.position = "right")
+
+
+
+
+
+
+```
+```{r}
+# command shift i
+```

@@ -1,0 +1,112 @@
+---
+title: EDS 223 Week 0
+
+
+---
+
+
+``` {r}
+
+packages <- c("here", "janitor", "tidyverse", "sf", "terra", "tmap", "spData", "spDataLarge", "geodata", "kableExtra", "viridisLite")
+installed_packages <- packages %in% rownames(installed.packages())
+
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+library(here)
+library(janitor)
+library(tidyverse)
+library(sf)
+library(kableExtra)
+
+gdw_df <- read_csv(here("weekly_discussion/", "gdw.csv")) |>
+  clean_names() # change to lower case
+
+```
+
+
+```{r}
+
+head(gdw_df, n = 10) |>  # show first 10 rows
+  kable()|>
+  kable_styling()
+```
+
+```{r}
+tail(gdw_df, n = 10) |> # show last 10 rows
+  kable() |>
+  kable_styling()
+```
+
+```{r}
+dim(gdw_df) # dimension of the data frame (shape)
+nrow(gdw_df) # number of rows
+ncol(gdw_df) # number of columns
+```
+
+## The shape of the data frame
+row: 175
+column: 72
+
+```{r}
+names(gdw_df) # print column names
+```
+
+(not working)
+```{r}
+country_df <- gdw_df[, "country"] # the data frame for country
+country_vec <- gdw_df[["country"]] # country as vector
+```
+
+```{r}
+gdw_df |> 
+  group_by(dam_type) |> # by dam type
+  summarise(count = n()) |>   # number of dams 
+  ungroup() # no difference
+```
+
+
+```{r}
+sub_dam <- gdw_df |> # subset creation
+  filter(dam_type == "Dam") # subset is filtered to contain only dam type
+```
+
+```{r}
+gdw_df <- gdw_df |> # reorder by ascending order 
+  arrange(year_dam)
+```
+
+
+```{r}
+gdw_df |>
+  group_by(country) |>
+  summarize(mean_dam_hgt_m = mean(dam_hgt_m, na.rm = TRUE)) |>
+  ungroup() |> 
+  ggplot(aes(x = country, y = mean_dam_hgt_m)) +
+    geom_bar(stat = "identity") +
+    labs(x = "Country",
+         y = "Average height of dam/barrier in meters") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
+```{r}
+ggplot(data = gdw_df,
+      aes(x = cap_mcm, y = dam_hgt_m)) +
+  geom_point() +
+  labs(x = "Storage capacity of reservoir in million cubic meters",
+       y = "Height of dam/barrier in meters") +
+  theme_minimal()
+```
+
+
+```{r}
+head(gdw_df$shape, n = 3)
+```
+
+```{r}
+
+class(gdw_df$shape)
+
+```
+
