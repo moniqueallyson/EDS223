@@ -1,4 +1,6 @@
 # EDS 223: Geospatial Analysis and Remote Sensing
+
+![MEDS](image/MEDS.png)
 ## Bren School of Environemntal Science and Management at UCSB
 
 The purpose of this repository is to house the weekly labs and discussion for EDS 223. [Course website](https://eds-223-geospatial.github.io/)
