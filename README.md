@@ -14,5 +14,11 @@ This repository is organized as the following:
 └── EDS223
     ├── README.md 
     ├── weekly_discussion
-    └── weekly_labs
+        ├── data
+        ├── EDS223_Week0.qmd
+        └── EDS223_Week1.qmd
+ └── weekly_labs
+        └── week1
+        ├── data
+        └── tmap_intro.qmd
 ```
